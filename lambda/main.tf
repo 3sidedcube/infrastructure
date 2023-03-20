@@ -1,9 +1,9 @@
 locals {
-  name = var.project_name
+  name = "${var.project_name}-lambda"
 }
 
 resource "aws_security_group" "lambda" {
-  name = "${local.name}-network-lambda-sg"
+  name = local.name
 
   vpc_id = var.vpc_id
 

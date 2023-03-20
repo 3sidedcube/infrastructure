@@ -17,8 +17,3 @@ module "vpc" {
 
   enable_nat_gateway = true
 }
-
-resource "aws_security_group" "lambda" {
-  name = "${local.name}-lambda-sg"
-  vpc_id = module.vpc.vpc_id
-}
