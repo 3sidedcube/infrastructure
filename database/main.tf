@@ -8,10 +8,8 @@ data "aws_subnet" "subnets" {
 }
 
 resource "random_password" "main" {
-  length           = 40
-  special          = true
-  min_special      = 5
-  override_special = "!#$%^&*()-_=+[]{}<>:?"
+  length  = 40
+  special = false
   keepers = {
     pass_version = 1
   }
