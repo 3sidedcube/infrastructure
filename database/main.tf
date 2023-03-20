@@ -35,6 +35,21 @@ resource "aws_security_group" "main" {
     cidr_blocks = values(data.aws_subnet.subnets).*.cidr_block
   }
 
+  # Allow self referencing
+  ingress {
+    from_port = 0
+    to_port   = 0
+    protocol  = -1
+    self      = true
+  }
+
+  egress {
+    from_port = 0
+    to_port   = 0
+    protocol  = -1
+    self      = true
+  }
+
   # Allow all outbound traffic.
   egress {
     from_port   = 0
