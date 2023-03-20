@@ -42,3 +42,9 @@ variable "scaling_max_capacity" {
   description = "Maximum capacity to scale to (2, 4, 8, 16, 32, 64, 192, 384)"
   default = 32
 }
+
+variable "deletion_protection" {
+  type = bool
+  default = true
+  description = "Prevent the database from being deleted"
+}
