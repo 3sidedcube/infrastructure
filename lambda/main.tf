@@ -1,5 +1,5 @@
 locals {
-  name = "${var.project_name}-lambda"
+  name = "${var.project_name}-network-lambda"
 }
 
 resource "aws_security_group" "lambda" {
