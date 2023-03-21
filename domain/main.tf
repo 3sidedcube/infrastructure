@@ -13,6 +13,8 @@ resource "aws_acm_certificate" "main" {
   domain_name       = var.root
   validation_method = "DNS"
 
+  subject_alternative_names = var.wildcard ? ["*.${var.root}"] : []
+
   lifecycle {
     create_before_destroy = true
   }
