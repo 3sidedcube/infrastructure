@@ -27,3 +27,8 @@ output "glue_role_arn" {
   description = "ARN of IAM role for AWS Glue crawler and jobs"
   value       = aws_iam_role.application.arn
 }
+
+output "lake_formation_confidentiality_tag" {
+  description = "LF Confidentiality Tag"
+  value       = aws_lakeformation_lf_tag.confidentiality
+}
