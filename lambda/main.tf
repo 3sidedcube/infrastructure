@@ -3,7 +3,7 @@ locals {
 }
 
 resource "aws_security_group" "lambda" {
-  name = local.name
+  name = "${local.name}-sg"
 
   vpc_id = var.vpc_id
 
