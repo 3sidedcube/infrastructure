@@ -5,7 +5,7 @@ provider "aws" {
 }
 
 data "aws_route53_zone" "main" {
-  id = var.zone_id
+  zone_id = var.zone_id
 }
 
 resource "aws_acm_certificate" "main" {
