@@ -12,9 +12,12 @@ resource "aws_s3_bucket" "main" {
   bucket = local.name
 }
 
-resource "aws_s3_bucket_acl" "main" {
+
+resource "aws_s3_bucket_ownership_controls" "media_bucket_ownership_controls" {
   bucket = aws_s3_bucket.main.id
-  acl    = "private"
+  rule {
+    object_ownership = "BucketOwnerPreferred"
+  }
 }
 
 resource "aws_s3_bucket_public_access_block" "main" {
@@ -23,6 +26,15 @@ resource "aws_s3_bucket_public_access_block" "main" {
   block_public_policy     = true
   ignore_public_acls      = true
   restrict_public_buckets = true
+}
+
+
+resource "aws_s3_bucket_acl" "main" {
+  depends_on = [aws_s3_bucket_ownership_controls.media_bucket_ownership_controls,
+    aws_s3_bucket_public_access_block.main
+  ]
+  bucket = aws_s3_bucket.main.id
+  acl    = "private"
 }
 
 resource "aws_s3_bucket_policy" "main" {
