@@ -18,22 +18,12 @@ data "aws_route53_zone" "public" {
 
 resource "aws_s3_bucket" "media_bucket" {
   bucket = local.media_bucket_name
-  acl    = "public-read"
-  policy = <<EOF
-{
-    "Version": "2012-10-17",
-    "Statement": [
-        {
-        "Sid": "PublicReadGetObject",
-        "Effect": "Allow",
-        "Principal": "*",
-        "Action": "s3:GetObject",
-        "Resource": "arn:aws:s3:::${local.media_bucket_name}/*"
-        }
-    ]
 }
-  EOF
 
+
+resource "aws_s3_bucket_cors_configuration" "s3_cors_config" {
+
+  bucket = aws_s3_bucket.media_bucket.id
   cors_rule {
     allowed_headers = ["*"]
     allowed_methods = ["GET", "POST", "PUT"]
@@ -48,8 +38,46 @@ resource "aws_s3_bucket_public_access_block" "media_bucket_public_access_block" 
   block_public_policy     = false
   ignore_public_acls      = false
   restrict_public_buckets = false
+
 }
 
+
+resource "aws_s3_bucket_ownership_controls" "media_bucket_ownership_controls" {
+  bucket = aws_s3_bucket.media_bucket.id
+  rule {
+    object_ownership = "BucketOwnerPreferred"
+  }
+}
+
+resource "aws_s3_bucket_policy" "allow_full_access" {
+  bucket = aws_s3_bucket.media_bucket.id
+  policy = <<EOF
+  {
+      "Version": "2012-10-17",
+      "Statement": [
+          {
+          "Sid": "PublicReadGetObject",
+          "Effect": "Allow",
+          "Principal": "*",
+          "Action": "s3:GetObject",
+          "Resource": "arn:aws:s3:::${local.media_bucket_name}/*"
+          }
+      ]
+  }
+    EOF
+}
+
+
+resource "aws_s3_bucket_acl" "media_bucket_acl" {
+  depends_on = [
+    aws_s3_bucket_ownership_controls.media_bucket_ownership_controls,
+    aws_s3_bucket_public_access_block.media_bucket_public_access_block
+  ]
+
+
+  bucket = aws_s3_bucket.media_bucket.id
+  acl    = "public-read"
+}
 
 # CDN
 resource "aws_cloudfront_distribution" "main" {
