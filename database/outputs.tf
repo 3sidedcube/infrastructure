@@ -1,3 +1,7 @@
+output "username" {
+  description = "Database username"
+  value       = aws_rds_cluster.main.master_username
+}
 output "password" {
   description = "Database password"
   value       = random_password.main.result
@@ -6,6 +10,10 @@ output "password" {
 
 output "endpoint" {
   value = aws_rds_cluster.main.endpoint
+}
+
+output "identifier" {
+  value = aws_rds_cluster.main.cluster_identifier
 }
 
 output "port" {
