@@ -38,7 +38,7 @@ resource "aws_wafv2_web_acl" "main" {
     name     = "AWSManagedRulesAdminProtectionRuleSet"
     priority = 52
 
-    action {
+    override_action {
       count {}
     }
 
