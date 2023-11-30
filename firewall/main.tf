@@ -16,7 +16,7 @@ resource "aws_wafv2_web_acl" "main" {
     name     = "AWSManagedRulesSQLiRuleSet"
     priority = 50
 
-    override_action {
+    action {
       block {}
     }
 
@@ -38,7 +38,7 @@ resource "aws_wafv2_web_acl" "main" {
     name     = "AWSManagedRulesAdminProtectionRuleSet"
     priority = 52
 
-    override_action {
+    action {
       block {}
     }
 
