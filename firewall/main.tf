@@ -20,6 +20,10 @@ resource "aws_wafv2_web_acl" "main" {
       block {}
     }
 
+    override_action {
+      none {}
+    }
+
     statement {
       managed_rule_group_statement {
         name        = "AWSManagedRulesSQLiRuleSet"
@@ -42,6 +46,10 @@ resource "aws_wafv2_web_acl" "main" {
       block {}
     }
 
+    override_action {
+      none {}
+    }
+
     statement {
       managed_rule_group_statement {
         name        = "AWSManagedRulesAdminProtectionRuleSet"
@@ -56,4 +64,3 @@ resource "aws_wafv2_web_acl" "main" {
     }
   }
 }
-
