@@ -110,7 +110,7 @@ resource "aws_wafv2_web_acl" "main" {
 
 
   rule {
-    name     = "AWSManagedRulesCommonRuleSet"
+    name     = "AWSManagedRulesKnownBadInputsRuleSet"
     priority = 5
 
 
@@ -121,7 +121,7 @@ resource "aws_wafv2_web_acl" "main" {
 
     statement {
       managed_rule_group_statement {
-        name        = "AWSManagedRulesCommonRuleSet"
+        name        = "AWSManagedRulesKnownBadInputsRuleSet"
         vendor_name = "AWS"
       }
     }
@@ -130,7 +130,7 @@ resource "aws_wafv2_web_acl" "main" {
     visibility_config {
       sampled_requests_enabled   = true
       cloudwatch_metrics_enabled = true
-      metric_name                = "AWSManagedRulesCommonRuleSet"
+      metric_name                = "AWSManagedRulesKnownBadInputsRuleSet"
     }
   }
 }
