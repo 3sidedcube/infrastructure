@@ -16,10 +16,6 @@ resource "aws_wafv2_web_acl" "main" {
     name     = "AWSManagedRulesSQLiRuleSet"
     priority = 50
 
-    override_action {
-      count {}
-    }
-
     statement {
       managed_rule_group_statement {
         name        = "AWSManagedRulesSQLiRuleSet"
@@ -34,13 +30,9 @@ resource "aws_wafv2_web_acl" "main" {
     }
   }
 
-    rule {
+  rule {
     name     = "AWSManagedRulesAdminProtectionRuleSet"
     priority = 52
-
-    override_action {
-      count {}
-    }
 
     statement {
       managed_rule_group_statement {
@@ -50,9 +42,28 @@ resource "aws_wafv2_web_acl" "main" {
     }
 
     visibility_config {
+      sampled_requests_enabled   = true
       cloudwatch_metrics_enabled = true
       metric_name                = "AWSManagedRulesAdminProtectionRuleSetMetric"
+    }
+  }
+
+  rule {
+    name     = "KnownBadInputsRule"
+    priority = 1
+
+    statement {
+      managed_rule_group_statement {
+        name        = "AWSManagedRulesCommonRuleSet"
+        vendor_name = "AWS"
+      }
+    }
+    
+
+    visibility_config {
       sampled_requests_enabled   = true
+      cloudwatch_metrics_enabled = true
+      metric_name                = "KnownBadInputsRuleMetrics"
     }
   }
 }
