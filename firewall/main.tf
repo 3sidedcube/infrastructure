@@ -12,12 +12,37 @@ resource "aws_wafv2_web_acl" "main" {
     sampled_requests_enabled   = true
   }
 
+
   rule {
-    name     = "AWSManagedRulesSQLiRuleSet"
-    priority = 50
+    name     = "AWSManagedRulesAmazonIpReputationList"
+    priority = 1
+
 
     override_action {
-      count {}
+      none {}
+    }
+
+
+    statement {
+      managed_rule_group_statement {
+        name        = "AWSManagedRulesAmazonIpReputationList"
+        vendor_name = "AWS"
+      }
+    }
+
+
+    visibility_config {
+      sampled_requests_enabled   = true
+      cloudwatch_metrics_enabled = true
+      metric_name                = "WSManagedRulesAmazonIpReputationList"
+    }
+  }
+  rule {
+    name     = "AWSManagedRulesSQLiRuleSet"
+    priority = 2
+
+    override_action {
+      none {}
     }
 
 
@@ -37,10 +62,10 @@ resource "aws_wafv2_web_acl" "main" {
 
   rule {
     name     = "AWSManagedRulesAdminProtectionRuleSet"
-    priority = 52
+    priority = 3
 
     override_action {
-      count {}
+      none {}
     }
 
 
@@ -59,12 +84,12 @@ resource "aws_wafv2_web_acl" "main" {
   }
 
   rule {
-    name     = "KnownBadInputsRule"
-    priority = 1
+    name     = "AWSManagedRulesCommonRuleSet"
+    priority = 4
 
 
     override_action {
-      count {}
+      none {}
     }
 
 
@@ -79,7 +104,33 @@ resource "aws_wafv2_web_acl" "main" {
     visibility_config {
       sampled_requests_enabled   = true
       cloudwatch_metrics_enabled = true
-      metric_name                = "KnownBadInputsRuleMetrics"
+      metric_name                = "AWSManagedRulesCommonRuleSet"
+    }
+  }
+
+
+  rule {
+    name     = "AWSManagedRulesCommonRuleSet"
+    priority = 5
+
+
+    override_action {
+      none {}
+    }
+
+
+    statement {
+      managed_rule_group_statement {
+        name        = "AWSManagedRulesCommonRuleSet"
+        vendor_name = "AWS"
+      }
+    }
+
+
+    visibility_config {
+      sampled_requests_enabled   = true
+      cloudwatch_metrics_enabled = true
+      metric_name                = "AWSManagedRulesCommonRuleSet"
     }
   }
 }
