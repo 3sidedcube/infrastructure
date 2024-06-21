@@ -72,7 +72,6 @@ resource "aws_rds_cluster" "main" {
   db_subnet_group_name      = aws_db_subnet_group.main.id
   final_snapshot_identifier = "${local.name}-final-snapshot"
   deletion_protection       = var.deletion_protection
-  manage_master_user_password = true
 
   scaling_configuration {
     auto_pause   = var.auto_pause
