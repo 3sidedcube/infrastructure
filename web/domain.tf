@@ -1,11 +1,14 @@
 resource "aws_route53_record" "main" {
   zone_id = var.zone_id
   name    = var.app_url
-  type    = "CNAME"
-  ttl     = 300
-  records = [aws_cloudfront_distribution.main.domain_name]
-}
+  type    = "A"
 
+  alias {
+    name                   = aws_cloudfront_distribution.main.domain_name
+    zone_id                = aws_cloudfront_distribution.main.hosted_zone_id
+    evaluate_target_health = false
+  }
+}
 resource "aws_acm_certificate" "main" {
   provider          = aws.acm_provider
   domain_name       = var.app_url
