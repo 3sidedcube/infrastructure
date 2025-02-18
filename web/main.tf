@@ -1,3 +1,7 @@
+data "aws_iam_openid_connect_provider" "github" {
+  url = "https://token.actions.githubusercontent.com"
+}
+
 provider "aws" {
   alias   = "acm_provider"
   profile = var.aws_profile
@@ -11,7 +15,6 @@ locals {
 resource "aws_s3_bucket" "main" {
   bucket = local.name
 }
-
 
 resource "aws_s3_bucket_ownership_controls" "media_bucket_ownership_controls" {
   bucket = aws_s3_bucket.main.id
