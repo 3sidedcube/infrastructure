@@ -5,3 +5,7 @@ output "web_deployment_bucket_name" {
 output "cdn" {
   value = aws_cloudfront_distribution.main
 }
+
+output "iam_role_arn" {
+  value     = aws_iam_role.ci.arn
+}

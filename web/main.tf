@@ -60,6 +60,27 @@ data "aws_iam_policy_document" "allow_cloudfront_access" {
   }
 }
 
+data "aws_iam_policy_document" "ci_assume" {
+  statement {
+    effect = "Allow"
+    principals {
+      type        = "Federated"
+      identifiers = [data.aws_iam_openid_connect_provider.github.arn]
+    }
+    actions = ["sts:AssumeRoleWithWebIdentity"]
+    condition {
+      test     = "StringEquals"
+      variable = "token.actions.githubusercontent.com:aud"
+      values   = ["sts.amazonaws.com"]
+    }
+    condition {
+      test     = "StringLike"
+      variable = "token.actions.githubusercontent.com:sub"
+      values   = ["repo:${var.repo_name}:*"]
+    }
+  }
+}
+
 resource "aws_cloudfront_origin_access_control" "main" {
   name                              = local.name
   origin_access_control_origin_type = "s3"
@@ -117,4 +138,16 @@ resource "aws_cloudfront_distribution" "main" {
       restriction_type = "none"
     }
   }
+}
+
+
+resource "aws_iam_role" "ci" {
+  name               = "${var.project_name}-web-ci-role"
+  assume_role_policy = data.aws_iam_policy_document.ci_assume.json
+}
+
+resource "aws_iam_role_policy" "ci" {
+  role   = aws_iam_role.ci.name
+  name   = "${var.project_name}-web-ci-policy"
+  policy = data.aws_iam_policy_document.allow_cloudfront_access.json
 }
