@@ -19,5 +19,6 @@ variable "app_url" {
 }
 
 variable "repo_name" {
-  type = "GitHub Repo Name"
+  type = string
+  description = "GitHub Repo Name"
 }
