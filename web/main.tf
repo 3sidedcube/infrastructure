@@ -143,6 +143,24 @@ resource "aws_cloudfront_distribution" "main" {
   }
 }
 
+data "aws_iam_policy_document" "web_deploy" {
+  statement {
+    effect = "Allow"
+    actions = [
+      "s3:*"
+    ]
+    resources = ["${aws_s3_bucket.main.arn}*", "${aws_s3_bucket.main.arn}/*"]
+  }
+
+  statement {
+    effect = "Allow"
+    actions = [
+      "cloudfront:CreateInvalidation"
+    ]
+    resources = ["*"]
+  }
+}
+
 
 resource "aws_iam_role" "ci" {
   name               = "${var.project_name}-web-ci-role"
@@ -152,5 +170,5 @@ resource "aws_iam_role" "ci" {
 resource "aws_iam_role_policy" "ci" {
   role   = aws_iam_role.ci.name
   name   = "${var.project_name}-web-ci-policy"
-  policy = data.aws_iam_policy_document.allow_cloudfront_access.json
+  policy = data.aws_iam_policy_document.web_deploy.json
 }
