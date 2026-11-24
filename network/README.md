@@ -25,6 +25,7 @@ No requirements.
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
 | <a name="input_project_name"></a> [project\_name](#input\_project\_name) | Project name and environment name, used to prefix resources. Example: cpni-phish-staging | `string` | n/a | yes |
+| <a name="input_single_nat_gateway"></a> [single\_nat\_gateway](#input\_single\_nat\_gateway) | Use one NAT gateway, in the first availability zone, for all private subnets instead of one per AZ. Cheaper, but outbound traffic from every AZ stops if that AZ fails. Turning this on for an existing VPC deletes the other NAT gateways and their public IPs; turning it off again creates new ones with new IPs. | `bool` | `false` | no |
 
 ## Outputs
 
