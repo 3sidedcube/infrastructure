@@ -16,4 +16,5 @@ module "vpc" {
   private_subnets = [for k, v in data.aws_availability_zones.available.names : cidrsubnet(local.cidr, 8, k + 10)]
 
   enable_nat_gateway = true
+  single_nat_gateway = var.single_nat_gateway
 }
