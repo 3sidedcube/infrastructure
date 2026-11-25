@@ -17,3 +17,9 @@ variable "dns_zone" {
   type = string
   description = "Zone ID of Route53 DNS hosted zone"
 }
+
+variable "minimum_protocol_version" {
+  type        = string
+  default     = "TLSv1.1_2016"
+  description = "Oldest TLS version and ciphers the CDN accepts from browsers, for example TLSv1.2_2021. The default is the value this module always used, so existing distributions don't change."
+}

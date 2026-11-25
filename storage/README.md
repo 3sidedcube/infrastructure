@@ -33,6 +33,7 @@ No modules.
 | <a name="input_aws_profile"></a> [aws\_profile](#input\_aws\_profile) | Profile to access AWS | `string` | n/a | yes |
 | <a name="input_cdn_url"></a> [cdn\_url](#input\_cdn\_url) | Location of CDN. e.g. cdn.staging.phish.cpni.3sidedcu.be | `string` | n/a | yes |
 | <a name="input_dns_zone"></a> [dns\_zone](#input\_dns\_zone) | Zone ID of Route53 DNS hosted zone | `string` | n/a | yes |
+| <a name="input_minimum_protocol_version"></a> [minimum\_protocol\_version](#input\_minimum\_protocol\_version) | Oldest TLS version and ciphers the CDN accepts from browsers, for example TLSv1.2\_2021. The default is the value this module always used, so existing distributions don't change. | `string` | `"TLSv1.1_2016"` | no |
 | <a name="input_project_name"></a> [project\_name](#input\_project\_name) | Project name and environment name, used to prefix resources. Example: cpni-phish-staging | `string` | n/a | yes |
 
 ## Outputs

@@ -22,3 +22,9 @@ variable "repo_name" {
   type = string
   description = "GitHub Repo Name"
 }
+
+variable "minimum_protocol_version" {
+  type        = string
+  default     = "TLSv1"
+  description = "Oldest TLS version and ciphers the CloudFront distribution accepts from browsers, for example TLSv1.2_2021. The default keeps CloudFront's own default, so existing distributions don't change."
+}
